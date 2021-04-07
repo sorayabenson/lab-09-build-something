@@ -45,14 +45,33 @@ describe('lab-09 routes', () => {
         expect(res.body[0].name).toEqual('Human Ghost')
         expect(res.body[0].id).toEqual('1');
       })
-  })
+  });
 
-  it('get /:id ghosts returns the ghost with the corresponding id', () => {
+  it('get /:id returns the ghost with the corresponding id', () => {
     return request(app)
       .get('/ghosts/1')
       .then((res) => {
         expect(res.body[0].name).toEqual('Human Ghost')
         expect(res.body[0].id).toEqual('1');
+      })
+  });
+
+  it('put /:id updated the ghost with the corresponding id', () => {
+    const updatedGhost = { 
+      name: 'Rose Garden Ghost',
+      img: 'rosegardenghost.png',
+      tagline: 'Wrap your lonely heart in the tender embrace of Rose Garden Ghost.',
+      backstory: 'Rose Garden Ghost made the finest rose water, distiled from their mountainside rose garden.'
+    }
+    
+    return request(app)
+      .put('/ghosts/1')
+      .send(updatedGhost)
+      .then((res) => {
+        expect(res.body).toEqual({
+          ...updatedGhost,
+          id: '1'
+        })
       })
   })
 });
