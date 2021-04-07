@@ -33,7 +33,7 @@ describe('lab-09 routes', () => {
       .then((res) => {
         expect(res.body).toEqual({
           ...newGhost,
-          id: '1'
+          id: '2'
         })
       })
   });
