@@ -46,4 +46,13 @@ describe('lab-09 routes', () => {
         expect(res.body[0].id).toEqual('1');
       })
   })
+
+  it('get /:id ghosts returns the ghost with the corresponding id', () => {
+    return request(app)
+      .get('/ghosts/1')
+      .then((res) => {
+        expect(res.body[0].name).toEqual('Human Ghost')
+        expect(res.body[0].id).toEqual('1');
+      })
+  })
 });
