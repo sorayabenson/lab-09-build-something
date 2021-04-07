@@ -11,7 +11,7 @@ describe('lab-09 routes', () => {
 
   let ghosts;
   beforeEach(async () => {
-    ghosts = Ghost.create({
+    ghosts = Ghost.callToTheHereAfter({
       name: 'Human Ghost',
       img: 'humanghost.png',
       tagline: 'Wrap your lonely heart in the tender embrace of Human Ghost.',
@@ -71,6 +71,19 @@ describe('lab-09 routes', () => {
         expect(res.body).toEqual({
           ...updatedGhost,
           id: '1'
+        })
+      })
+  });
+
+  it('delete /:id deletes the corresponding ghost from the database', () => {
+    return request(app)
+      .delete('/ghosts/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          name: 'Human Ghost',
+          img: 'humanghost.png',
+          tagline: 'Wrap your lonely heart in the tender embrace of Human Ghost.',
+          backstory: 'Human Ghost made the finest rose water, distiled from their mountainside rose garden.'
         })
       })
   })
