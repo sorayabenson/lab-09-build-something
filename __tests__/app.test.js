@@ -2,11 +2,22 @@ const pool = require('../lib/utils/pool');
 const setup = require('../data/setup');
 const request = require('supertest');
 const app = require('../lib/app');
+const Ghost = require('../lib/models/Ghost');
 
 describe('lab-09 routes', () => {
   beforeEach(() => {
     return setup(pool);
   });
+
+  let ghosts;
+  beforeEach(async () => {
+    ghosts = Ghost.create({
+      name: 'Human Ghost',
+      img: 'humanghost.png',
+      tagline: 'Wrap your lonely heart in the tender embrace of Human Ghost.',
+      backstory: 'Human Ghost made the finest rose water, distiled from their mountainside rose garden.'
+    })
+  })
 
   it('post /ghosts creates a new ghost and sends it to the database', () => {
     const newGhost = {
@@ -24,6 +35,15 @@ describe('lab-09 routes', () => {
           ...newGhost,
           id: '1'
         })
+      })
+  });
+
+  it('get / ghosts returns all ghosts from the database', () => {
+    return request(app)
+      .get('/ghosts')
+      .then((res) => {
+        expect(res.body[0].name).toEqual('Human Ghost')
+        expect(res.body[0].id).toEqual('1');
       })
   })
 });
