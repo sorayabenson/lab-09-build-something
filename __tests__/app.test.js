@@ -80,6 +80,7 @@ describe('lab-09 routes', () => {
       .delete('/ghosts/1')
       .then((res) => {
         expect(res.body).toEqual({
+          id: '1',
           name: 'Human Ghost',
           img: 'humanghost.png',
           tagline: 'Wrap your lonely heart in the tender embrace of Human Ghost.',
